@@ -1,0 +1,296 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+       .rag-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+       .rag-header {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            color: white;
+            padding: 24px;
+            text-align: center;
+        }
+       .rag-header h2 { margin-bottom: 8px; font-size: 24px; }
+       .rag-header p { opacity: 0.9; font-size: 14px; }
+       .rag-body { padding: 24px; }
+
+       .upload-box {
+            border: 2px dashed #93c5fd;
+            padding: 20px;
+            text-align: center;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            background: #eff6ff;
+            transition: all 0.3s;
+        }
+       .upload-box.uploaded {
+            border-color: #22c55e;
+            background: #f0fdf4;
+        }
+       .upload-box p { color: #475569; margin-bottom: 12px; }
+
+       .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+       .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+       .btn-primary:hover { background: #1d4ed8; transform: translateY(-1px); }
+       .btn-secondary {
+            background: #e2e8f0;
+            color: #334155;
+            margin: 4px;
+        }
+       .btn-secondary:hover { background: #cbd5e1; }
+       .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+       .chat-box {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            height: 450px;
+            overflow-y: auto;
+            padding: 16px;
+            background: #fafafa;
+            margin-bottom: 16px;
+        }
+       .msg { margin-bottom: 16px; display: flex; animation: slideIn 0.3s ease; }
+        @@keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+       .msg.user { justify-content: flex-end; }
+       .msg-bubble {
+            max-width: 75%;
+            padding: 12px 16px;
+            border-radius: 16px;
+            line-height: 1.6;
+            word-wrap: break-word;
+        }
+       .msg.user.msg-bubble {
+            background: #2563eb;
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+       .msg.bot.msg-bubble {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-bottom-left-radius: 4px;
+        }
+       .msg.bot.msg-bubble b { color: #1e40af; }
+
+       .sources {
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 1px dashed #cbd5e1;
+            font-size: 13px;
+        }
+       .sources-title { font-weight: 600; color: #475569; margin-bottom: 8px; }
+       .source-item {
+            background: #f8fafc;
+            padding: 8px 10px;
+            border-radius: 6px;
+            margin-top: 6px;
+            color: #475569;
+            border-left: 3px solid #3b82f6;
+        }
+
+       .quick-questions { margin-bottom: 12px; }
+       .chat-input { display: flex; gap: 8px; }
+       .chat-input input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #cbd5e1;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+       .chat-input input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+       .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+       .modal.show { display: flex; }
+       .modal-content {
+            background: white;
+            padding: 32px;
+            border-radius: 16px;
+            max-width: 650px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+       .modal-content h3 {
+            margin-bottom: 20px;
+            color: #1e40af;
+            font-size: 22px;
+        }
+       .flow-step {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+       .flow-num {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #2563eb, #1e40af);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+       .flow-text b { color: #1e40af; }
+       .typing {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #94a3b8;
+            animation: typing 1.4s infinite;
+            margin: 0 2px;
+        }
+       .typing:nth-child(2) { animation-delay: 0.2s; }
+       .typing:nth-child(3) { animation-delay: 0.4s; }
+        @@keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+    </style>
+    <div class="rag-container">
+        <div class="rag-header">
+            <h2>🤖 Chatbot RAG - Quản lý Tài sản công</h2>
+            <p>Demo luồng LangChain: PDF → Chunking → Embedding → Vector Search → LLM</p>
+            <button class="btn btn-secondary" style="margin-top: 12px; background: rgba(255,255,255,0.2); color: white;" onclick="showFlow()">
+                📊 Xem luồng LangChain
+            </button>
+        </div>
+
+        <div class="rag-body">
+            <div id="uploadBox" class="upload-box">
+                <input type="file" id="pdfInput" accept=".pdf" hidden />
+                <p id="uploadText">📄 Chưa có tài liệu. Bấm để tải lên file PDF danh sách tài sản</p>
+                <button class="btn btn-primary" onclick="document.getElementById('pdfInput').click()">
+                    Chọn file PDF
+                </button>
+            </div>
+
+            <div class="chat-box" id="chatBox">
+                <div class="msg bot">
+                    <div class="msg-bubble">
+                        Xin chào! Tôi là trợ lý tài sản công dùng <b>LangChain RAG</b>. <br>
+                        Hãy upload file PDF rồi đặt câu hỏi cho tôi nhé.
+                    </div>
+                </div>
+            </div>
+
+            <div class="quick-questions">
+                <button class="btn btn-secondary" onclick="askQuick('Tài sản mã TS001 hiện đang ở đâu?')">
+                    TS001 ở đâu?
+                </button>
+                <button class="btn btn-secondary" onclick="askQuick('Liệt kê tài sản ở chi nhánh Hà Nội')">
+                    TS ở Hà Nội
+                </button>
+                <button class="btn btn-secondary" onclick="askQuick('Tài sản nào có giá trị trên 1 tỷ?')">
+                    TS > 1 tỷ
+                </button>
+            </div>
+
+            <div class="chat-input">
+                <input type="text" id="questionInput" placeholder="Nhập câu hỏi về tài sản..."
+                       onkeypress="if(event.key==='Enter') sendQuestion()" />
+                <button class="btn btn-primary" onclick="sendQuestion()">Gửi</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal giải thích flow -->
+    <div id="flowModal" class="modal" onclick="closeFlow()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <h3>🔄 Luồng LangChain RAG hoạt động như thế nào?</h3>
+            <div class="flow-step">
+                <div class="flow-num">1</div>
+                <div class="flow-text">
+                    <b>Load PDF:</b> Dùng <code>PyPDFLoader</code> đọc file tài sản công của bạn
+                </div>
+            </div>
+            <div class="flow-step">
+                <div class="flow-num">2</div>
+                <div class="flow-text">
+                    <b>Split:</b> <code>RecursiveCharacterTextSplitter</code> cắt thành chunks 1000 ký tự, overlap 200
+                </div>
+            </div>
+            <div class="flow-step">
+                <div class="flow-num">3</div>
+                <div class="flow-text">
+                    <b>Embed:</b> <code>OpenAIEmbeddings</code> chuyển mỗi chunk thành vector 1536 chiều
+                </div>
+            </div>
+            <div class="flow-step">
+                <div class="flow-num">4</div>
+                <div class="flow-text">
+                    <b>Store:</b> Lưu vectors vào <code>FAISS</code> hoặc <code>Chroma</code> Vector Database
+                </div>
+            </div>
+            <div class="flow-step">
+                <div class="flow-num">5</div>
+                <div class="flow-text">
+                    <b>Retrieve:</b> Khi user hỏi, embed câu hỏi → tìm 3 chunks có cosine similarity cao nhất
+                </div>
+            </div>
+            <div class="flow-step">
+                <div class="flow-num">6</div>
+                <div class="flow-text">
+                    <b>Generate:</b> Ghép context + câu hỏi vào prompt → <code>ChatOpenAI</code> trả lời
+                </div>
+            </div>
+            <button class="btn btn-primary" onclick="closeFlow()" style="width:100%; margin-top:10px;">
+                Đã hiểu
+            </button>
+        </div>
+    </div>
+
+<script src="~/js/chatbot.js" asp-append-version="true"></script>
+
+
+    <script>
+       $(document).ready(function () {
+        chatbot.init({ pagesize: 20 });
+    })
+    </script>
