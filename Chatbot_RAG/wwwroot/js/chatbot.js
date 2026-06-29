@@ -28,16 +28,40 @@ const MOCK_DATA = {
     }
 };
 var chatbot = {
- 
+    el: {
+        questionInput:"#questionInput"
+    },
+    btn: {
+        btnUpFile: "#btnUpFile",
+        btnSend: "#btnSend",
+        btnDaHieu: "#btnDaHieu",
+
+
+    },
     init: function () {
-        $('#pdfInput').on('change', function (e) {
-            if (e.target.files.length > 0) {
-                fileUploaded = true;
-                fileName = e.target.files[0].name;
-                $('#uploadBox').addClass('uploaded');
-                $('#uploadText').html(`✅ Đã nạp: <b>${fileName}</b> - Sẵn sàng truy vấn`);
-                addBotMsg("Đã nạp tài liệu thành công! Tôi đã index xong. Bạn có thể hỏi tôi về tài sản trong file.");
-            }
+
+        // Chọn file
+        $("#btnUpFile").off("click").on("click", function () {
+            $("#pdfInput").click();
+        });
+
+        // Sau khi chọn file
+        $("#pdfInput").off("change").on("change", function () {
+
+            if (this.files.length === 0)
+                return;
+
+            const file = this.files[0];
+
+            fileUploaded = true;
+            fileName = file.name;
+
+            $("#uploadBox").addClass("uploaded");
+            $("#uploadText").html(`✅ Đã nạp: <b>${fileName}</b> - Sẵn sàng truy vấn`);
+
+            chatbot.addBotMsg(
+                "Đã nạp tài liệu thành công! Tôi đã index xong. Bạn có thể hỏi tôi về tài sản trong file."
+            );
         });
 
         // 2. Bấm nút hỏi nhanh
@@ -59,7 +83,7 @@ var chatbot = {
         });
 
         // 5. Nút Gửi
-        $('.chat-input.btn-primary').on('click', chatbot.sendQuestion());
+        $('#btnSend').off('click').on('click', chatbot.sendQuestion());
 
     },
     // 1. Upload PDF
@@ -74,20 +98,20 @@ sendQuestion: function () {
     const question = $('#questionInput').val().trim();
     if (!question) return;
 
-    addUserMsg(question);
+    chatbot.addUserMsg(question);
     $('#questionInput').val('');
 
     // Hiển thị typing
-    const typingId = addTypingMsg();
+    const typingId = chatbot.addTypingMsg();
 
     setTimeout(() => {
-        removeTypingMsg(typingId);
+        chatbot.removeTypingMsg(typingId);
         if (!fileUploaded) {
-            addBotMsg("⚠️ Vui lòng upload file PDF tài sản trước khi hỏi.");
+            chatbot.addBotMsg("⚠️ Vui lòng upload file PDF tài sản trước khi hỏi.");
             return;
         }
-        const answer = mockRAG(question);
-        addBotMsg(answer.text, answer.sources);
+        const answer = chatbot.mockRAG(question);
+        chatbot.addBotMsg(answer.text, answer.sources);
     }, 1200);
 },
 
@@ -153,7 +177,7 @@ sendQuestion: function () {
  addUserMsg: function (text) {
     const html = `<div class="msg user"><div class="msg-bubble">${text}</div></div>`;
     $('#chatBox').append(html);
-    scrollChat();
+    chatbot.scrollChat();
 },
 
  addBotMsg: function (text, sources = []) {
@@ -167,7 +191,7 @@ sendQuestion: function () {
     }
     const html = `<div class="msg bot"><div class="msg-bubble">${text}${sourceHtml}</div></div>`;
     $('#chatBox').append(html);
-    scrollChat();
+     chatbot.scrollChat();
 },
 
  addTypingMsg: function () {
@@ -176,7 +200,7 @@ sendQuestion: function () {
             <span class="typing"></span><span class="typing"></span><span class="typing"></span>
         </div></div>`;
     $('#chatBox').append(html);
-    scrollChat();
+     chatbot.scrollChat();
     return id;
 },
 

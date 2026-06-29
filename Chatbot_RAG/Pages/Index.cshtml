@@ -206,7 +206,7 @@
             <div id="uploadBox" class="upload-box">
                 <input type="file" id="pdfInput" accept=".pdf" hidden />
                 <p id="uploadText">📄 Chưa có tài liệu. Bấm để tải lên file PDF danh sách tài sản</p>
-                <button class="btn btn-primary" onclick="document.getElementById('pdfInput').click()">
+                <button class="btn btn-primary" id="btnUpFile">
                     Chọn file PDF
                 </button>
             </div>
@@ -221,28 +221,28 @@
             </div>
 
             <div class="quick-questions">
-                <button class="btn btn-secondary" onclick="askQuick('Tài sản mã TS001 hiện đang ở đâu?')">
+                <button class="btn btn-secondary" >
                     TS001 ở đâu?
                 </button>
-                <button class="btn btn-secondary" onclick="askQuick('Liệt kê tài sản ở chi nhánh Hà Nội')">
+                <button class="btn btn-secondary">
                     TS ở Hà Nội
                 </button>
-                <button class="btn btn-secondary" onclick="askQuick('Tài sản nào có giá trị trên 1 tỷ?')">
+                <button class="btn btn-secondary" >
                     TS > 1 tỷ
                 </button>
             </div>
 
             <div class="chat-input">
                 <input type="text" id="questionInput" placeholder="Nhập câu hỏi về tài sản..."
-                       onkeypress="if(event.key==='Enter') sendQuestion()" />
-                <button class="btn btn-primary" onclick="sendQuestion()">Gửi</button>
+                       />
+                <button class="btn btn-primary" id="btnSend" >Gửi</button>
             </div>
         </div>
     </div>
 
     <!-- Modal giải thích flow -->
-    <div id="flowModal" class="modal" onclick="closeFlow()">
-        <div class="modal-content" onclick="event.stopPropagation()">
+    <div id="flowModal" class="modal">
+        <div class="modal-content">
             <h3>🔄 Luồng LangChain RAG hoạt động như thế nào?</h3>
             <div class="flow-step">
                 <div class="flow-num">1</div>
@@ -280,7 +280,7 @@
                     <b>Generate:</b> Ghép context + câu hỏi vào prompt → <code>ChatOpenAI</code> trả lời
                 </div>
             </div>
-            <button class="btn btn-primary" onclick="closeFlow()" style="width:100%; margin-top:10px;">
+            <button class="btn btn-primary" id="btnDaHieu"  style="width:100%; margin-top:10px;">
                 Đã hiểu
             </button>
         </div>

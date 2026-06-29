@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36212.18 d17.14
+VisualStudioVersion = 17.14.36212.18
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chatbot_RAG", "Chatbot_RAG\Chatbot_RAG.csproj", "{077DE6E2-0558-4DA4-B4FD-A7236BB137FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RAG.Model", "RAG.Model\RAG.Model.csproj", "{FDE7C260-C8CC-4403-BA99-B29F77B61BF6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RAG.Service", "Rag.Repository\RAG.Service.csproj", "{516AE055-0868-4917-978A-8F4D9523A8C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{077DE6E2-0558-4DA4-B4FD-A7236BB137FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{077DE6E2-0558-4DA4-B4FD-A7236BB137FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{077DE6E2-0558-4DA4-B4FD-A7236BB137FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDE7C260-C8CC-4403-BA99-B29F77B61BF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDE7C260-C8CC-4403-BA99-B29F77B61BF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDE7C260-C8CC-4403-BA99-B29F77B61BF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDE7C260-C8CC-4403-BA99-B29F77B61BF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{516AE055-0868-4917-978A-8F4D9523A8C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{516AE055-0868-4917-978A-8F4D9523A8C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{516AE055-0868-4917-978A-8F4D9523A8C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{516AE055-0868-4917-978A-8F4D9523A8C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
