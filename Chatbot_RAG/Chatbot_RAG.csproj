@@ -6,4 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\RAG.Agents\RAG.Agents.csproj" />
+  </ItemGroup>
+
 </Project>

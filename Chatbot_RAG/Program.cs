@@ -1,9 +1,22 @@
+using RAG.Agents;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
+
+// Program.cs
+builder.Services.AddScoped<PlannerAgent>(sp =>
+{
+    var config = sp.GetRequiredService<IConfiguration>();
+    var logger = sp.GetRequiredService<ILogger<PlannerAgent>>();
+    return new PlannerAgent(
+        config["OpenAI:ApiKey"]!,
+        config["OpenAI:Model"] ?? "gpt-5"
+        );
+});
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
